@@ -11,6 +11,7 @@
   "dependencies": {
     "@pantheon-systems/cpub-react-sdk": "~5.2.1",
     "@pantheon-systems/nextjs-cache-handler": "^0.7.0",
+    "@tailwindcss/typography": "^0.5.19",
     "next": "16.1.6",
     "query-string": "^8.2.0",
     "react": "19.2.3",
