@@ -23,6 +23,7 @@ const siteConfig: SiteConfig = {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Admissions", href: "/admissions" },
+    { label: "Articles", href: "/articles" },
     { label: "Contact", href: "/contact" },
   ],
 
