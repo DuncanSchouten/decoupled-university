@@ -10,7 +10,36 @@ import {
 } from "@pantheon-systems/cpub-react-sdk";
 import { ArticleRenderer } from "@pantheon-systems/cpub-react-sdk/components";
 import Link from "next/link";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
+
+const STYLES_TO_STRIP = [
+  /fontSize/,
+  /fontWeight/,
+  /padding(Left|Right|Top|Bottom)*/,
+  /margin(Left|Right|Top|Bottom)*/,
+  /lineHeight/,
+  /height/,
+];
+
+function stripInlineStyles<T extends keyof React.JSX.IntrinsicElements>(
+  tag: T,
+) {
+  function StyledElement({
+    children,
+    id,
+    style,
+    ...attrs
+  }: React.JSX.IntrinsicElements[T] & { node?: unknown }) {
+    const cleaned = { ...style };
+    STYLES_TO_STRIP.forEach((pattern) => {
+      Object.keys(cleaned).forEach((key) => {
+        if (pattern.test(key)) delete cleaned[key as keyof typeof cleaned];
+      });
+    });
+    return React.createElement(tag, { id, style: cleaned, ...attrs }, children);
+  }
+  return StyledElement;
+}
 
 updateConfig({
   pccHost: (process.env.PCC_HOST || process.env.NEXT_PUBLIC_PCC_HOST) as string,
@@ -51,7 +80,23 @@ function ArticleView({
       </nav>
 
       <article className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-brand-text-primary prose-a:text-brand-accent">
-        <ArticleRenderer article={liveArticle} />
+        <ArticleRenderer
+          article={liveArticle}
+          componentMap={{
+            h1: stripInlineStyles("h1"),
+            h2: stripInlineStyles("h2"),
+            h3: stripInlineStyles("h3"),
+            h4: stripInlineStyles("h4"),
+            h5: stripInlineStyles("h5"),
+            h6: stripInlineStyles("h6"),
+            p: stripInlineStyles("p"),
+            li: stripInlineStyles("li"),
+            span: stripInlineStyles("span"),
+          }}
+          __experimentalFlags={{
+            preserveImageStyles: true,
+          }}
+        />
       </article>
 
       {liveArticle.tags && liveArticle.tags.length > 0 && (
