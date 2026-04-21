@@ -46,7 +46,8 @@ function ArticleContent() {
           Article Not Found
         </h1>
         <p className="text-brand-text-muted mb-8">
-          The article you&apos;re looking for doesn&apos;t exist or hasn&apos;t been published yet.
+          The article you&apos;re looking for doesn&apos;t exist or hasn&apos;t
+          been published yet.
         </p>
         <Link
           href="/articles"
@@ -92,8 +93,12 @@ function ArticleContent() {
 }
 
 export default function ArticlePage() {
+  const searchParams = useSearchParams();
+  const pccGrant = searchParams.get("pccGrant");
+
   const client = PCCConvenienceFunctions.buildPantheonClient({
     isClientSide: true,
+    pccGrant: pccGrant ?? undefined,
   });
 
   return (
