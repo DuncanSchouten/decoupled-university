@@ -3,9 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
-  cacheHandler: "./cacheHandler.mjs",
+  cacheHandler: new URL("./cacheHandler.mjs", import.meta.url).pathname,
   cacheHandlers: {
-    default: "./use-cache-handler.mjs",
+    default: new URL("./use-cache-handler.mjs", import.meta.url).pathname,
   },
   cacheMaxMemorySize: 0,
   env: {
