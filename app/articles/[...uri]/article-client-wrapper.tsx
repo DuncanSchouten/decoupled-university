@@ -3,6 +3,7 @@
 import {
   PantheonProvider,
   PCCConvenienceFunctions,
+  updateConfig,
   useArticle,
   type Article,
   type PublishingLevel,
@@ -10,6 +11,12 @@ import {
 import { ArticleRenderer } from "@pantheon-systems/cpub-react-sdk/components";
 import Link from "next/link";
 import { useMemo } from "react";
+
+updateConfig({
+  pccHost: (process.env.PCC_HOST || process.env.NEXT_PUBLIC_PCC_HOST) as string,
+  siteId: (process.env.PCC_SITE_ID ||
+    process.env.NEXT_PUBLIC_PCC_SITE_ID) as string,
+});
 
 function ArticleView({
   article,

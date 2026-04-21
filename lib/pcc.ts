@@ -9,6 +9,7 @@ export const pantheonAPIOptions: PantheonAPIOptions = {
     basePath: "/articles",
     maxDepth: -1,
   }),
+  getSiteId: () => process.env.PCC_SITE_ID as string,
 };
 
 export const pantheonAPIHandler = PantheonAPI(pantheonAPIOptions);
